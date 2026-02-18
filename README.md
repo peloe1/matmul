@@ -32,15 +32,20 @@ The primary objective was to minimize execution time by leveraging hardware-spec
 
 ---
 
+## Benchmarking Environment
+* **CPU:** AMD Ryzen 5 5600X (Zen 3 Architecture)
+* **GPU:** NVIDIA GeForce RTX 5070 (Blackwell Architecture)
+* **Compiler:** GCC 11.4.0 (with OpenMP 4.5 support)
+* **CUDA Toolkit:** v13.0
+* **Vectorization:** AVX2, FMA (256-bit SIMD)
+
 ## Performance Benchmarks
 
-The benchmark suite evaluates three distinct hardware scenarios. The GPU demonstrates its true power in high-load "Stress Test" scenarios, achieving over **22x speedup** compared to the optimized CPU.
+The following chart illustrates the execution time scaling as the matrix size increases. Note the log-log scale, which highlights the massive throughput gap as the workload exceeds 100MB of data.
 
-| Test Case | Dimensions | Purpose | CPU GFLOPS | GPU GFLOPS |
-| :--- | :--- | :--- | :--- | :--- |
-| **Compute Bound** | $16384 \times 512$ | ALU Throughput | ~254 | ~81 |
-| **Memory Bound** | $512 \times 16384$ | RAM Bandwidth | ~177 | ~325 |
-| **Stress Test** | $10000 \times 10000$ | Full System Load | ~182 | **~4081** |
+<p align="center">
+  <img src="performance_scaling.png" width="800" alt="Performance Scaling Plot">
+</p>
 
 ### Key Takeaway
 While the CPU wins on "thin" matrices due to lower launch overhead, the CUDA implementation scales significantly better once the GPU occupancy is saturated, hitting a peak of **4.1 TFLOPS**.
@@ -49,7 +54,7 @@ While the CPU wins on "thin" matrices due to lower launch overhead, the CUDA imp
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 * **OS:** Ubuntu 22.04 LTS or newer
@@ -59,8 +64,8 @@ While the CPU wins on "thin" matrices due to lower launch overhead, the CUDA imp
 ### Installation & Execution
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/yourusername/matrix-transpose-multiply.git](https://github.com/yourusername/matrix-transpose-multiply.git)
-   cd matrix-transpose-multiply
+   git clone https://github.com/peloe1/matmul.git
+   cd matmul
    
 2. **Compile the project:**
    ```bash
