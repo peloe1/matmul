@@ -32,6 +32,13 @@ The primary objective was to minimize execution time by leveraging hardware-spec
 
 ---
 
+### Benchmarking Environment
+* **CPU:** AMD Ryzen 5 5600X (Zen 3 Architecture)
+* **GPU:** NVIDIA GeForce RTX 5070 (Blackwell Architecture)
+* **Compiler:** GCC 11.4.0 (with OpenMP 4.5 support)
+* **CUDA Toolkit:** v13.0
+* **Vectorization:** AVX2, FMA (256-bit SIMD)
+
 ## Performance Benchmarks
 
 The following chart illustrates the execution time scaling as the matrix size increases. Note the log-log scale, which highlights the massive throughput gap as the workload exceeds 100MB of data.
@@ -47,7 +54,7 @@ While the CPU wins on "thin" matrices due to lower launch overhead, the CUDA imp
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 * **OS:** Ubuntu 22.04 LTS or newer
