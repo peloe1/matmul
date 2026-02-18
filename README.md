@@ -32,7 +32,7 @@ The primary objective was to minimize execution time by leveraging hardware-spec
 
 ---
 
-### Benchmarking Environment
+## Benchmarking Environment
 * **CPU:** AMD Ryzen 5 5600X (Zen 3 Architecture)
 * **GPU:** NVIDIA GeForce RTX 5070 (Blackwell Architecture)
 * **Compiler:** GCC 11.4.0 (with OpenMP 4.5 support)
