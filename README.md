@@ -12,7 +12,7 @@ The primary objective was to minimize execution time by leveraging hardware-spec
 
 ---
 
-## 🛠 Tech Stack & Optimizations
+## Tech Stack & Optimizations
 
 ### 1. Reference Implementation (CPU)
 * **Approach:** Standard triple-nested loop.
