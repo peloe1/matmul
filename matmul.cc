@@ -83,6 +83,7 @@ void cpu_matmul(int ny, int nx, const float *data, float *result) {
                 //float8_t vv70 = {0.0}, vv71 = {0.0}, vv72 = {0.0}, vv73 = {0.0}, vv74 = {0.0}, vv75 = {0.0}, vv76 = {0.0};//, vv77 = {0.0}, vv78 = {0.0}, vv79 = {0.0};
                 //float8_t vv80 = {0.0}, vv81 = {0.0}, vv82 = {0.0}, vv83 = {0.0}, vv84 = {0.0}, vv85 = {0.0}, vv86 = {0.0};//, vv87 = {0.0}, vv88 = {0.0}, vv89 = {0.0};
                 //float8_t vv90 = {0.0}, vv91 = {0.0}, vv92 = {0.0}, vv93 = {0.0}, vv94 = {0.0}, vv95 = {0.0}, vv96 = {0.0};//, vv97 = {0.0}, vv98 = {0.0}, vv99 = {0.0};
+                
                 // 7 * 7 = 49 float8_t vectors, remaining spots in register = 64-7*7 = 15
                 
                 for (int ka = 0; ka < na; ++ka) {

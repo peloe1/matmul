@@ -1,2 +1,3 @@
 matmul_og.cc
 matmul_og.cu
+*.o

@@ -1,0 +1,61 @@
+Name,MB,CPU_ms,GPU_ms
+CPU_Total total time: 0 ms
+GPU_Total total time: 363 ms
+512x512,1,0.898255,363.157
+CPU_Total total time: 6 ms
+GPU_Total total time: 4 ms
+1024x1024,4,6.45815,4.17618
+CPU_Total total time: 12 ms
+GPU_Total total time: 5 ms
+1536x1536,9,12.6129,5.67708
+CPU_Total total time: 38 ms
+GPU_Total total time: 8 ms
+2048x2048,16,38.9588,8.10691
+CPU_Total total time: 127 ms
+GPU_Total total time: 16 ms
+3072x3072,36,127.944,17.0031
+CPU_Total total time: 298 ms
+GPU_Total total time: 31 ms
+4096x4096,64,298.427,31.431
+CPU_Total total time: 584 ms
+GPU_Total total time: 49 ms
+5120x5120,100,584.874,49.7735
+CPU_Total total time: 1036 ms
+GPU_Total total time: 75 ms
+6144x6144,144,1036.16,76.0046
+CPU_Total total time: 1698 ms
+GPU_Total total time: 105 ms
+7168x7168,196,1698.27,105.09
+CPU_Total total time: 2869 ms
+GPU_Total total time: 146 ms
+8192x8192,256,2869.11,146.278
+CPU_Total total time: 4016 ms
+GPU_Total total time: 277 ms
+9216x9216,324,4016.84,277.077
+CPU_Total total time: 3999 ms
+GPU_Total total time: 255 ms
+10000x10000,381.47,3999.78,255.09
+CPU_Total total time: 7769 ms
+GPU_Total total time: 554 ms
+11264x11264,484,7769.97,554.232
+CPU_Total total time: 11520 ms
+GPU_Total total time: 543 ms
+12288x12288,576,11520.8,543.116
+CPU_Total total time: 18097 ms
+GPU_Total total time: 826 ms
+14336x14336,784,18097.7,826.086
+CPU_Total total time: 26872 ms
+GPU_Total total time: 1021 ms
+16384x16384,1024,26872.4,1021.44
+CPU_Total total time: 559 ms
+GPU_Total total time: 279 ms
+Compute Bound (Thin),32,559.413,279.925
+CPU_Total total time: 25 ms
+GPU_Total total time: 15 ms
+Memory Bound (Wide),32,25.3182,15.0556
+CPU_Total total time: 867 ms
+GPU_Total total time: 1669 ms
+Extreme Ratio,8,867.938,1669.2
+CPU_Total total time: 3 ms
+GPU_Total total time: 9 ms
+Long Vector,8,3.90824,9.84765

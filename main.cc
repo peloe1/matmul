@@ -6,7 +6,6 @@
 #include <iomanip>
 #include <chrono>
 #include <mm_malloc.h>
-#include "timer.h"
 
 extern void cpu_matmul(int ny, int nx, const float *data, float *result);
 extern void gpu_matmul(int ny, int nx, const float *data, float *result);
@@ -15,71 +14,71 @@ struct TestCase {
     std::string name;
     int ny;
     int nx;
-    std::string purpose;
 };
 
-void reference_matmul(int ny, int nx, const float* data, float* result) {
-    for (int i = 0; i < ny; ++i) {
-        for (int j = 0; j <= i; ++j) {
-            float sum = 0.0f;
-            for (int k = 0; k < nx; ++k) sum += data[k + i * nx] * data[k + j * nx];
-            result[i + j * ny] = sum;
-        }
-    }
-}
-
-double calculate_gflops(int ny, int nx, double ms) {
-    if (ms <= 0) return 0;
-    double ops = (double)ny * (ny + 1) / 2.0 * nx * 2.0; 
-    return ops / (ms * 1.0e6);
-}
-
 int main() {
+    // Expanded test suite to see scaling
     std::vector<TestCase> tests = {
-        {"Compute Bound", 16384, 512,   "Tests ALU/math throughput"},
-        {"Memory Bound",  512,   16384, "Tests RAM bandwidth"},
-        {"Stress Test",   10000, 10000, "Real-world high load"}
+        // Small Scale
+        {"512x512",     512,   512},
+        {"1024x1024",   1024,  1024},
+        {"1536x1536",   1536,  1536},
+        {"2048x2048",   2048,  2048},
+
+        // Mid Scale
+        {"3072x3072",   3072,  3072},
+        {"4096x4096",   4096,  4096},
+        {"5120x5120",   5120,  5120},
+        {"6144x6144",   6144,  6144},
+        {"7168x7168",   7168,  7168},
+        {"8192x8192",   8192,  8192},
+
+        // Large Scale
+        {"9216x9216",   9216,  9216},
+        {"10000x10000", 10000, 10000},
+        {"11264x11264", 11264, 11264},
+        {"12288x12288", 12288, 12288},
+        {"14336x14336", 14336, 14336},
+        {"16384x16384", 16384, 16384}, // ~1GB of Input Data
+
+        // Rectangular / Bottleneck Tests
+        {"Compute Bound (Thin)", 16384, 512},   
+        {"Memory Bound (Wide)",  512,   16384},  
+        {"Extreme Ratio",        32768, 64},   // High launch overhead test
+        {"Long Vector",          64,    32768}    // Streaming bandwidth test
     };
 
-    std::cout << std::fixed << std::setprecision(2);
+    // CSV Header for easy plotting
+    std::cout << "Name,MB,CPU_ms,GPU_ms" << std::endl;
 
     for (const auto& test : tests) {
-        std::cout << "\n" << std::string(60, '=') << "\n";
-        std::cout << "TEST: " << test.name << " (" << test.ny << "x" << test.nx << ")\n";
-        std::cout << "Purpose: " << test.purpose << "\n";
-        std::cout << std::string(60, '-') << "\n";
+        float mb = (float)test.ny * test.nx * sizeof(float) / (1024.0f * 1024.0f);
 
-        // Allocate
         float* data = (float*)_mm_malloc(test.ny * test.nx * sizeof(float), 64);
-        float* ref_res = (float*)_mm_malloc(test.ny * test.ny * sizeof(float), 64);
         float* cpu_res = (float*)_mm_malloc(test.ny * test.ny * sizeof(float), 64);
         float* gpu_res = (float*)_mm_malloc(test.ny * test.ny * sizeof(float), 64);
 
-        // Initialize
+        // Initialize with random data
         std::mt19937 gen(42);
         std::uniform_real_distribution<float> dis(0.0f, 1.0f);
         for (int i = 0; i < test.ny * test.nx; ++i) data[i] = dis(gen);
 
-        // --- Execution & Timing ---
-        auto run = [&](const std::string& label, auto func, float* res) {
-            auto start = std::chrono::high_resolution_clock::now();
-            func(test.ny, test.nx, data, res);
-            auto end = std::chrono::high_resolution_clock::now();
-            double ms = std::chrono::duration<double, std::milli>(end - start).count();
-            std::cout << std::left << std::setw(15) << label << ": " 
-                      << std::right << std::setw(10) << ms << " ms (" 
-                      << std::setw(8) << calculate_gflops(test.ny, test.nx, ms) << " GFLOPS)\n";
-        };
+        // CPU Time
+        auto s1 = std::chrono::high_resolution_clock::now();
+        cpu_matmul(test.ny, test.nx, data, cpu_res);
+        auto e1 = std::chrono::high_resolution_clock::now();
+        double cpu_ms = std::chrono::duration<double, std::milli>(e1 - s1).count();
 
-        // Skip reference for Stress Test to save time
-        if (test.ny <= 4096) run("Reference", reference_matmul, ref_res);
-        else std::cout << "Reference      : Skipped (Too slow for large Ny)\n";
+        // GPU Time
+        auto s2 = std::chrono::high_resolution_clock::now();
+        gpu_matmul(test.ny, test.nx, data, gpu_res);
+        auto e2 = std::chrono::high_resolution_clock::now();
+        double gpu_ms = std::chrono::duration<double, std::milli>(e2 - s2).count();
 
-        run("Optimized CPU", cpu_matmul, cpu_res);
-        run("Optimized GPU", gpu_matmul, gpu_res);
+        // Print CSV row
+        std::cout << test.name << "," << mb << "," << cpu_ms << "," << gpu_ms << std::endl;
 
-        _mm_free(data); _mm_free(ref_res); _mm_free(cpu_res); _mm_free(gpu_res);
+        _mm_free(data); _mm_free(cpu_res); _mm_free(gpu_res);
     }
-
     return 0;
 }
