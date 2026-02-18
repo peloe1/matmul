@@ -17,4 +17,5 @@ plt.legend()
 plt.grid(True, which="both", alpha=0.3)
 
 plt.savefig('performance_scaling.pdf', format='pdf', bbox_inches='tight')
+plt.savefig('performance_scaling.png', format='png', bbox_inches='tight')
 plt.show()
