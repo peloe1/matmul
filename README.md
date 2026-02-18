@@ -34,13 +34,11 @@ The primary objective was to minimize execution time by leveraging hardware-spec
 
 ## Performance Benchmarks
 
-The benchmark suite evaluates three distinct hardware scenarios. The GPU demonstrates its true power in high-load "Stress Test" scenarios, achieving over **22x speedup** compared to the optimized CPU.
+The following chart illustrates the execution time scaling as the matrix size increases. Note the log-log scale, which highlights the massive throughput gap as the workload exceeds 100MB of data.
 
-| Test Case | Dimensions | Purpose | CPU GFLOPS | GPU GFLOPS |
-| :--- | :--- | :--- | :--- | :--- |
-| **Compute Bound** | $16384 \times 512$ | ALU Throughput | ~254 | ~81 |
-| **Memory Bound** | $512 \times 16384$ | RAM Bandwidth | ~177 | ~325 |
-| **Stress Test** | $10000 \times 10000$ | Full System Load | ~182 | **~4081** |
+<p align="center">
+  <img src="performance_plot.png" width="800" alt="Performance Scaling Plot">
+</p>
 
 ### Key Takeaway
 While the CPU wins on "thin" matrices due to lower launch overhead, the CUDA implementation scales significantly better once the GPU occupancy is saturated, hitting a peak of **4.1 TFLOPS**.
