@@ -64,8 +64,8 @@ While the CPU wins on "thin" matrices due to lower launch overhead, the CUDA imp
 ### Installation & Execution
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/yourusername/matrix-transpose-multiply.git](https://github.com/yourusername/matrix-transpose-multiply.git)
-   cd matrix-transpose-multiply
+   git clone [https://github.com/yourusername/matmul.git](https://github.com/yourusername/matmul.git)
+   cd matmul
    
 2. **Compile the project:**
    ```bash
