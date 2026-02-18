@@ -37,7 +37,7 @@ The primary objective was to minimize execution time by leveraging hardware-spec
 The following chart illustrates the execution time scaling as the matrix size increases. Note the log-log scale, which highlights the massive throughput gap as the workload exceeds 100MB of data.
 
 <p align="center">
-  <img src="performance_plot.png" width="800" alt="Performance Scaling Plot">
+  <img src="performance_scaling.png" width="800" alt="Performance Scaling Plot">
 </p>
 
 ### Key Takeaway
